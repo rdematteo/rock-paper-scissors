@@ -1,14 +1,10 @@
 # frozen_string_literal: true
 
-# Player class
-# Game (App class)
-
 class Player
   MOVES = %i[rock paper scissors].freeze
 
   attr_reader :score, :move, :name
   attr_writer :name
-
 
   def initialize
     @score = 0
@@ -16,18 +12,15 @@ class Player
     @name = 'Player 1'
   end
 
-  def get_move
+  def player_move
     loop do
       puts 'Pick a move'
       print '> '
       @move = gets.chomp.strip.downcase.to_sym # convert string to symbol eg :rock
-      if @move == :quit
-        return false
-      elsif MOVES.include?(@move)
-        return @move
-      else
-        puts 'Invalid move. Try Rock, Paper or Scissors'
-      end
+      return false if @move == :quit
+      return @move if MOVES.include?(@move)
+
+      puts 'Invalid move. Try Rock, Paper or Scissors'
     end
   end
 
@@ -37,18 +30,14 @@ class Player
 end
 
 class ComputerPlayer < Player
+  attr_reader :name
 
   def initialize
     super
     @name = 'Computer'
-    
   end
 
-  def name
-    @name
-  end
-
-  def get_move
+  def player_move
     @move = Player::MOVES.sample
   end
 end
@@ -62,7 +51,7 @@ class Game
 
   def initialize
     @p1 = Player.new
-    puts " What is your name"
+    puts ' What is your name'
     @p1.name = gets.chomp.strip
     puts "Welcome #{@p1.name}"
     @p2 = ComputerPlayer.new
@@ -83,8 +72,9 @@ class Game
   end
 
   def play_round
-    return false unless @p1.get_move
-    return false unless @p2.get_move
+    return false unless @p1.player_move
+    return false unless @p2.player_move
+
     print_moves
     pick_winner
     print_scores
