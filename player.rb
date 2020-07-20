@@ -15,6 +15,7 @@ class Player
   def player_move
     loop do
       puts 'Pick a move'
+      puts 'Rock, Paper or Scissors'
       print '> '
       @move = gets.chomp.strip.downcase.to_sym # convert string to symbol eg :rock
       return false if @move == :quit
