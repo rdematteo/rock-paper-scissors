@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'colorize'
 
 class Game
   WIN_SCENARIOS = [
@@ -21,10 +22,10 @@ class Game
     if @p1.move == @p2.move
       puts "It's a tie"
     elsif WIN_SCENARIOS.include?([@p1.move, @p2.move])
-      puts "#{@p1.name} wins"
+      puts "#{@p1.name} wins".red
       @p1.win
     else
-      puts "#{@p2.name} wins"
+      puts "#{@p2.name} wins".red
       @p2.win
     end
   end
@@ -45,7 +46,7 @@ class Game
     loop do
       break unless play_round
     end
-    puts 'Thanks for playing'
+    puts 'Thanks for playing'.yellow
     print_scores
   end
 
@@ -57,7 +58,7 @@ class Game
     puts
     puts 'Scores'
     puts
-    puts "#{@p1.name}: #{@p1.score}"
-    puts "#{@p2.name}: #{@p2.score}"
+    puts "#{@p1.name}: #{@p1.score}".blue
+    puts "#{@p2.name}: #{@p2.score}".green
   end
 end
